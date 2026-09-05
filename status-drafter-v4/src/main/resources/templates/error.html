@@ -1,0 +1,19 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Error - Status Drafter</title>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<main class="content" style="max-width:900px;margin:60px auto;">
+<div class="auth-card">
+<h1>Request could not be completed</h1>
+<p th:text="${message}">An error occurred.</p>
+<a class="button" href="/">Return to dashboard</a>
+<a class="button" href="/login">Go to login</a>
+</div>
+</main>
+</body>
+</html>

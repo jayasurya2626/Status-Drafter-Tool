@@ -1,0 +1,6 @@
+package com.example.statusdrafter.config;
+import com.example.statusdrafter.service.UserService; import org.springframework.context.annotation.*; import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity; import org.springframework.security.config.annotation.web.builders.HttpSecurity; import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder; import org.springframework.security.crypto.password.PasswordEncoder; import org.springframework.security.web.SecurityFilterChain;
+@Configuration @EnableMethodSecurity public class SecurityConfig {
+ @Bean PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
+ @Bean SecurityFilterChain security(HttpSecurity http,UserService userService)throws Exception{return http.authorizeHttpRequests(a->a.requestMatchers("/css/**","/js/**","/login","/register","/error").permitAll().requestMatchers("/employee/**").hasRole("EMPLOYEE").requestMatchers("/manager/**").hasRole("MANAGER").requestMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated()).formLogin(f->f.loginPage("/login").defaultSuccessUrl("/",true).permitAll()).logout(l->l.logoutUrl("/logout").logoutSuccessUrl("/login?logout").invalidateHttpSession(true).deleteCookies("JSESSIONID")).userDetailsService(userService).sessionManagement(s->s.maximumSessions(1)).build();}
+}

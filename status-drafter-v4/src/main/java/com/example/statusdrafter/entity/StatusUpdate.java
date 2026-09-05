@@ -1,0 +1,9 @@
+package com.example.statusdrafter.entity;
+import jakarta.persistence.*; import jakarta.validation.constraints.*; import java.time.*;
+@Entity @Table(name="status_updates",uniqueConstraints=@UniqueConstraint(columnNames={"employee_id","update_date"})) public class StatusUpdate {
+ @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id; @ManyToOne(fetch=FetchType.LAZY,optional=false) @JoinColumn(name="employee_id") private User employee; @NotNull private LocalDate updateDate;
+ @Column(columnDefinition="TEXT") private String completedWork; @Column(columnDefinition="TEXT") private String currentWork; @Column(columnDefinition="TEXT") private String pendingWork; @Column(columnDefinition="TEXT") private String blockers; @Column(columnDefinition="TEXT") private String nextSteps;
+ @Column(nullable=false) private LocalDateTime createdAt; @Column(nullable=false) private LocalDateTime updatedAt;
+ @PrePersist void pre(){createdAt=updatedAt=LocalDateTime.now();} @PreUpdate void upd(){updatedAt=LocalDateTime.now();}
+ public StatusUpdate(){} public Long getId(){return id;} public void setId(Long v){id=v;} public User getEmployee(){return employee;} public void setEmployee(User v){employee=v;} public LocalDate getUpdateDate(){return updateDate;} public void setUpdateDate(LocalDate v){updateDate=v;} public String getCompletedWork(){return completedWork;} public void setCompletedWork(String v){completedWork=v;} public String getCurrentWork(){return currentWork;} public void setCurrentWork(String v){currentWork=v;} public String getPendingWork(){return pendingWork;} public void setPendingWork(String v){pendingWork=v;} public String getBlockers(){return blockers;} public void setBlockers(String v){blockers=v;} public String getNextSteps(){return nextSteps;} public void setNextSteps(String v){nextSteps=v;} public LocalDateTime getCreatedAt(){return createdAt;} public LocalDateTime getUpdatedAt(){return updatedAt;}
+}
